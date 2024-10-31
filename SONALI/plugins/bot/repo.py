@@ -13,7 +13,7 @@ start_txt = """
  
 ✰ 𝗣ᴀʜʟᴇ 𝗣ᴀᴘᴀ 𝗕ᴏʟ 𝗥ᴇᴘᴏ 𝗢ᴡɴᴇʀ ᴋᴏ 
 
-✰ || @ll_ALPHA_BABY_lll ||
+✰ || @rainbowdragon_tm ||
  
 ✰ 𝗥ᴜɴ 24x7 𝗟ᴀɢ 𝗙ʀᴇᴇ 𝗪ɪᴛʜᴏᴜᴛ 𝗦ᴛᴏᴘ
  
@@ -29,21 +29,21 @@ async def start(_, msg):
           InlineKeyboardButton("𝗔ᴅᴅ ᴍᴇ 𝗠ᴀʙʏ", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
         ],
         [
-          InlineKeyboardButton("𝗛ᴇʟᴘ", url="https://t.me/+Q25anL0Ckuk5NzM1"),
-          InlineKeyboardButton("⍣ ፝֠֩ ̶ ̶ꭘⷪ ͓ ꯭፝֠֩͠ ̶꯭ ̶͓𝐑꯭α͕υ꯭𝛅͔ʜ꯭α꯭ɴ͓", url="https://t.me/ll_ALPHA_BABY_lll"),
+          InlineKeyboardButton("𝗛ᴇʟᴘ", url="https://t.me/knmusic_moha"),
+          InlineKeyboardButton("⍣ ፝֠֩ ̶ ̶ꭘⷪ ͓RAINBOW_TEAM", url="https://t.me/rainbowdragon_tm"),
           ],
                [
-                InlineKeyboardButton("𝗧ᴇᴀᴍ 𝗣ᴜʀᴠɪ 𝗕ᴏᴛs", url=f"https://t.me/PURVI_SUPPORT"),
+                InlineKeyboardButton("𝗧ᴇᴀᴍ 𝗣ᴜʀᴠɪ 𝗕ᴏᴛs", url=f"https://t.me/KNMUSIC_MOHA2"),
 ],
 [
-InlineKeyboardButton("𝗠ᴀɪɴ 𝗕ᴏᴛ", url=f"https://t.me/PURVI_MUSIC_BOT"),
+InlineKeyboardButton("𝗠ᴀɪɴ 𝗕ᴏᴛ", url=f"https://t.me/musicmusivvipBot"),
 
         ]]
     
     reply_markup = InlineKeyboardMarkup(buttons)
     
     await msg.reply_photo(
-        photo="https://telegra.ph/file/9601c451ff3bac3c8e3b8.jpg",
+        photo="https://files.catbox.moe/7hrcnz.jpg",
         caption=start_txt,
         reply_markup=reply_markup
     )
