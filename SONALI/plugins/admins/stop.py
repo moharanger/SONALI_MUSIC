@@ -6,11 +6,11 @@ from SONALI.core.call import RAUSHAN
 from SONALI.utils.database import set_loop
 from SONALI.utils.decorators import AdminRightsCheck
 from SONALI.utils.inline import close_markup
-from config import BANNED_USERS
+from config import BANNED_USERS 
 
 
-@app.on_message(
-    filters.command(["end", "stop", "cend", "cstop"], prefixes=["/", "!", "."])
+@app.on_message(filters.text & 
+    filters.command(["end", "stop", "cend", "cstop","اتمام"], prefixes=["+", "!", "."," "])
     & filters.group
     & ~BANNED_USERS
 )
