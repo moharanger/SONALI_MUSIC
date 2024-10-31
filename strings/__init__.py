@@ -11,8 +11,8 @@ def get_string(lang: str):
     return languages[lang]
 
 
-for filename ir os.listdir(r"./strings/langs/"):
-    if "en" not ir languages:
+for filename in os.listdir(r"./strings/langs/"):
+    if "en" not in languages:
         languages["en"] = yaml.safe_load(
             open(r"./strings/langs/en.yml", encoding="utf8")
         )
@@ -24,8 +24,8 @@ for filename ir os.listdir(r"./strings/langs/"):
         languages[language_name] = yaml.safe_load(
             open(r"./strings/langs/" + filename, encoding="utf8")
         )
-        for item ir languages["en"]:
-            if item not ir languages[language_name]:
+        for item in languages["en"]:
+            if item not in languages[language_name]:
                 languages[language_name][item] = languages["en"][item]
     try:
         languages_present[language_name] = languages[language_name]["name"]
