@@ -6,8 +6,6 @@ from pyrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Message,
-    InputMediaPhoto,
-    InputMediaVideo,
 )
 
 from SONALI import app
@@ -36,12 +34,14 @@ from SONALI.utils.inline.settings import (
     vote_mode_markup,
 )
 from SONALI.utils.inline.start import private_panel
-from config import BANNED_USERS, OWNER_ID, START_IMG_URL
+from config import BANNED_USERS, OWNER_ID
+
+###Command
+SETTINGS_COMMAND = get_command("SETTINGS_COMMAND")
 
 
-@app.on_message(
-    filters.command(["settings", "setting"]) & filters.group & ~BANNED_USERS
-)
+@app.on_message(filters.command(SETTINGS_COMMAND ,prefixes=["", "/"]) & filters.group & ~BANNED_USERS)
+    
 @language
 async def settings_mar(client, message: Message, _):
     buttons = setting_markup(_)
@@ -50,15 +50,24 @@ async def settings_mar(client, message: Message, _):
         reply_markup=InlineKeyboardMarkup(buttons),
     )
 
-@app.on_callback_query(filters.regex("gib_source") & ~BANNED_USERS)
+
+@app.on_callback_query(filters.regex("settings_helper") & ~BANNED_USERS)
 @languageCB
-async def gib_repo(client, CallbackQuery, _):
-    await CallbackQuery.edit_message_media(
-        InputMediaVideo("https://telegra.ph/file/136b8c8380fb100ab3efa.mp4"),
-        reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton(text="ʙᴀᴄᴋ", callback_data=f"settingsback_helper")]]
+async def settings_cb(client, CallbackQuery, _):
+    try:
+        await CallbackQuery.answer(_["set_cb_5"])
+    except:
+        pass
+    buttons = setting_markup(_)
+    return await CallbackQuery.edit_message_text(
+        _["setting_1"].format(
+            app.mention,
+            CallbackQuery.message.chat.id,
+            CallbackQuery.message.chat.title,
         ),
+        reply_markup=InlineKeyboardMarkup(buttons),
     )
+
 
 @app.on_callback_query(filters.regex("settingsback_helper") & ~BANNED_USERS)
 @languageCB
@@ -71,12 +80,8 @@ async def settings_back_markup(client, CallbackQuery: CallbackQuery, _):
         await app.resolve_peer(OWNER_ID)
         OWNER = OWNER_ID
         buttons = private_panel(_)
-        return await CallbackQuery.edit_message_media(
-            InputMediaPhoto(
-                media=START_IMG_URL,
-                caption=_["start_2"].format(
-                    CallbackQuery.from_user.first_name, app.mention),
-            ),
+        return await CallbackQuery.edit_message_text(
+            _["start_2"].format(CallbackQuery.from_user.mention, app.mention),
             reply_markup=InlineKeyboardMarkup(buttons),
         )
     else:
@@ -386,3 +391,24 @@ async def vote_change(client, CallbackQuery, _):
         )
     except MessageNotModified:
         return
+        
+        
+"""✅<u>تنظیمات گروه:</u>
+/settings - دریافت تنظیمات کامل گروه با دکمه‌های اینلاین
+
+🔗 <u>گزینه‌ها در تنظیمات:</u>
+
+1 شما می‌توانید کیفیت صدا را تنظیم کنید.
+2 شما می‌توانید کیفیت ویدیو را تنظیم کنید.
+3 **کاربران AUTH**: شما می‌توانید از اینجا حالت دستورات ادمین را برای همه یا فقط ادمین‌ها تغییر دهید.
+4 **حالت تمیز:** ربات پیام‌های خودش را پس از ۵ دقیقه از گروه شما حذف می‌کند تا چت شما تمیز و مرتب بماند.
+5 **پاک‌سازی دستورات**: وقتی فعال باشد، ربات بلافاصله دستورات اجراشده خود را حذف می‌کند.
+
+   <b><u>تنظیمات پخش:</u></b>
+/playmode - دریافت پنل تنظیمات پخش کامل با دکمه‌هایی که می‌توانید تنظیمات پخش گروه خود را از آنجا تنظیم کنید.
+
+   <b><u>گزینه‌ها در حالت پخش:</u></b>
+1 **حالت جستجو** [مستقیم یا اینلاین] - تغییر حالت جستجوی شما هنگام اجرای /playmode
+2 **دستورات ادمین** [برای همه یا فقط ادمین‌ها] - اگر برای همه باشد، هرکسی در گروه شما می‌تواند از دستورات ادمین (مانند /skip، /stop و غیره) استفاده کند.
+3 **نوع پخش** [برای همه یا فقط ادمین‌ها] - اگر فقط برای ادمین‌ها باشد، تنها ادمین‌های گروه می‌توانند موسیقی را در چت صوتی پخش کنند.
+"""
