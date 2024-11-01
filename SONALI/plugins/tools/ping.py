@@ -11,7 +11,7 @@ import aiohttp
 import asyncio
 
  
-@app.on_message(filters.command(["ping", "alive"]) & ~BANNED_USERS & filters.group)
+@app.on_message(filters.command(["ping", "alive","ربات","پینگ"] , prefixes=["", "/"]) & ~BANNED_USERS)
 @language
 async def ping_com(client, message: Message, _):
     response = await message.reply_photo(
@@ -19,10 +19,10 @@ async def ping_com(client, message: Message, _):
         caption=_["ping_1"].format(app.mention),
     )
     start = datetime.now()
-    pytgping = await RAUSHAN.ping()
+    pytgping = await Yukki.ping()
     UP, CPU, RAM, DISK = await bot_sys_stats()
     resp = (datetime.now() - start).microseconds / 1000
-    await response.edit(
+    await response.edit_text(
         _["ping_2"].format(
             resp,
             app.mention,
@@ -32,5 +32,5 @@ async def ping_com(client, message: Message, _):
             DISK,
             pytgping,
         ),
-        reply_markup=InlineKeyboardMarkup(botplaylist_markup(_)),
-        )
+        reply_markup=support_group_markup(_),
+    )
