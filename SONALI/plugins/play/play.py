@@ -29,16 +29,18 @@ from config import BANNED_USERS, lyrical
 @app.on_message(
     filters.command(
         [
-            "play","پخش"
-            "vplay",
-            "cplay",
-            "cvplay",
-            "playforce",
-            "vplayforce",
-            "cplayforce",
+            "پخش",
+            "play",
+            "vplay","ویدیو پخش",
+            "cplay","کانال پخش",
+            "cute",
+            "cvplay","ویدیو کانال پخش",
+            "playforce","فوری پخش",
+            "vplayforce","فوری ویدیو پخش",
+            "cplayforce","فوری کانال پخش",
             "cvplayforce",
         ],
-        prefixes=["/", "!", "."," "],
+        prefixes=["", "/"]
     )
     & filters.group
     & ~BANNED_USERS
@@ -509,7 +511,7 @@ async def play_music(client, CallbackQuery, _):
 async def RAUSHANmous_check(client, CallbackQuery):
     try:
         await CallbackQuery.answer(
-            "» ʀᴇᴠᴇʀᴛ ʙᴀᴄᴋ ᴛᴏ ᴜsᴇʀ ᴀᴄᴄᴏᴜɴᴛ :\n\nᴏᴘᴇɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ sᴇᴛᴛɪɴɢs.\n-> ᴀᴅᴍɪɴɪsᴛʀᴀᴛᴏʀs\n-> ᴄʟɪᴄᴋ ᴏɴ ʏᴏᴜʀ ɴᴀᴍᴇ\n-> ᴜɴᴄʜᴇᴄᴋ ᴀɴᴏɴʏᴍᴏᴜs ᴀᴅᴍɪɴ ᴘᴇʀᴍɪssɪᴏɴs.",
+            "شما یک ادمین ناشناس هستید.برای استفاده از من، به حساب کاربری خود بازگردید.",
             show_alert=True,
         )
     except:
@@ -665,3 +667,18 @@ async def slider_queries(client, CallbackQuery, _):
         return await CallbackQuery.edit_message_media(
             media=med, reply_markup=InlineKeyboardMarkup(buttons)
         )
+__MODULE__ = "پخش"
+__HELP__ = """
+★ <b>پلِی، وی‌پلِی، سی‌پلِی</b> - دستورات موجود  
+★ <b>پلِی‌فورس، وی‌پلِی‌فورس، سی‌پلِی‌فورس</b> - دستورات پخش اجباری
+
+✦ <b>سی</b> به معنای پخش کانال است.  
+✦ <b>وی</b> به معنای پخش ویدئو است.  
+✦ <b>فورس</b> به معنای پخش اجباری است.
+
+✧ <b>/play یا /vplay یا /cplay</b> - ربات پخش آهنگ یا لینک استریم زنده شما را در چت صوتی شروع می‌کند.
+
+✧ <b>/playforce یا /vplayforce یا /cplayforce</b> - پخش اجباری، ترک فعلی در چت صوتی را متوقف کرده و بدون اینکه صف پخش را بهم بزند، آهنگ جستجو شده را فوراً پخش می‌کند.
+
+✧ <b>/channelplay [نام کاربری یا شناسه چت] یا [غیرفعال]</b> - اتصال کانال به گروه و پخش موسیقی در چت صوتی کانال از گروه شما."""
+       
