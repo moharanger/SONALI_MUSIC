@@ -11,79 +11,78 @@ from SONALI.utils.database import (
     remove_active_video_chat,
 )
 
+# Commands
+ACTIVEVC_COMMAND = get_command("ACTIVEVC_COMMAND")
+ACTIVEVIDEO_COMMAND = get_command("ACTIVEVIDEO_COMMAND")
 
-@app.on_message(filters.command(["ac"]) & SUDOERS)
-async def ac(c, m):
-    audio = len(await get_active_chats())
-    video = len(await get_active_video_chats())
-    await m.reply_text(f"ᴀᴜᴅɪᴏ - {audio}\nᴠɪᴅᴇᴏ - {video}")
-    
-@app.on_message(
-    filters.command(
-        ["activevc", "activevoice"], prefixes=["/", "!", "%", ",", "", ".", "@", "#"]
-    )
-    & SUDOERS
-)
-async def active_voice_chats(client, message):
-    ic = await message.reply_text("» ɢᴇᴛᴛɪɴɢ ᴀᴄᴛɪᴠᴇ ᴠᴏɪᴄᴇ ᴄʜᴀᴛs ʟɪsᴛ...")
+
+@app.on_message(filters.command(ACTIVEVC_COMMAND , prefixes=["", "/"]) & SUDOERS)
+async def activevc(_, message: Message):
+    mystic = await message.reply_text("در حال فعال‌سازی چت صوتی... لطفاً کمی صبر کنید.")
     served_chats = await get_active_chats()
     text = ""
     j = 0
     for x in served_chats:
         try:
             title = (await app.get_chat(x)).title
-        except:
-            await remove_active_chat(x)
-            continue
-        try:
-            chat = await app.get_chat(x)
-            if chat.username:
-                user = chat.username
-                text += f"<b>{j + 1}.</b> <a href=https://t.me/{user}>{unidecode(title).upper()}</a> [<code>{x}</code>]\n"
-            else:
-                text += f"<b>{j + 1}.</b> {unidecode(title).upper()} [<code>{x}</code>]\n"
-            j += 1
-        except:
-            continue
+        except Exception:
+            title = "ᴘʀɪᴠᴀᴛᴇ ɢʀᴏᴜᴘ"
+        if (await app.get_chat(x)).username:
+            user = (await app.get_chat(x)).username
+            text += f"<b>{j + 1}.</b>  [{title}](https://t.me/{user})[`{x}`]\n"
+        else:
+            text += f"<b>{j + 1}. {title}</b> [`{x}`]\n"
+        j += 1
     if not text:
-        await ic.edit_text(f"» ɴᴏ ᴀᴄᴛɪᴠᴇ ᴠᴏɪᴄᴇ ᴄʜᴀᴛs ᴏɴ {app.mention}.")
+        await mystic.edit_text("چت فعالی نیست")
     else:
-        await ic.edit_text(
-            f"<b>» ʟɪsᴛ ᴏғ ᴄᴜʀʀᴇɴᴛʟʏ ᴀᴄᴛɪᴠᴇ ᴠᴏɪᴄᴇ ᴄʜᴀᴛs :</b>\n\n{text}",
+        await mystic.edit_text(
+            f"**چت فعال :-**\n\n{text}",
             disable_web_page_preview=True,
         )
-@app.on_message(
-    filters.command(
-        ["activev", "activevideo"], prefixes=["/", "!", "%", ",", "", ".", "@", "#"]
-    )
-    & SUDOERS
-)
+
+
+@app.on_message(filters.command(ACTIVEVIDEO_COMMAND , prefixes=["", "/"]) & SUDOERS)
 async def activevi_(_, message: Message):
-    mystic = await message.reply_text("» ɢᴇᴛᴛɪɴɢ ᴀᴄᴛɪᴠᴇ ᴠɪᴅᴇᴏ ᴄʜᴀᴛs ʟɪsᴛ...")
+    mystic = await message.reply_text("در حال فعال‌سازی چت صوتی... لطفاً کمی صبر کنید.")
     served_chats = await get_active_video_chats()
     text = ""
     j = 0
     for x in served_chats:
         try:
             title = (await app.get_chat(x)).title
-        except:
-            await remove_active_video_chat(x)
-            continue
-        try:
-            if (await app.get_chat(x)).username:
-                user = (await app.get_chat(x)).username
-                text += f"<b>{j + 1}.</b> <a href=https://t.me/{user}>{unidecode(title).upper()}</a> [<code>{x}</code>]\n"
-            else:
-                text += (
-                    f"<b>{j + 1}.</b> {unidecode(title).upper()} [<code>{x}</code>]\n"
-                )
-            j += 1
-        except:
-            continue
+        except Exception:
+            title = "ᴘʀɪᴠᴀᴛᴇ ɢʀᴏᴜᴘ"
+        if (await app.get_chat(x)).username:
+            user = (await app.get_chat(x)).username
+            text += f"<b>{j + 1}.</b>  [{title}](https://t.me/{user})[`{x}`]\n"
+        else:
+            text += f"<b>{j + 1}. {title}</b> [`{x}`]\n"
+        j += 1
     if not text:
-        await mystic.edit_text(f"» ɴᴏ ᴀᴄᴛɪᴠᴇ ᴠɪᴅᴇᴏ ᴄʜᴀᴛs ᴏɴ {app.mention}.")
+        await mystic.edit_text("چت فعالی نیست")
     else:
         await mystic.edit_text(
-            f"<b>» ʟɪsᴛ ᴏғ ᴄᴜʀʀᴇɴᴛʟʏ ᴀᴄᴛɪᴠᴇ ᴠɪᴅᴇᴏ ᴄʜᴀᴛs :</b>\n\n{text}",
+            f"**ویدیو چت فعال:-**\n\n{text}",
             disable_web_page_preview=True,
         )
+
+
+@app.on_message(filters.command(["ac"]) & SUDOERS)
+async def vc(client, message: Message):
+    ac_audio = str(len(await get_active_chats()))
+
+    await message.reply_text(f"مشخصات چت فعال: {ac_audio}")
+
+
+__MODULE__ = "ویس چت"
+__HELP__ = """
+<b>✧ /ac</b> - چک کردن چت‌های صوتی فعال بر روی ربات.
+
+<b>✧ /activevoice</b> - چک کردن چت‌های صوتی و تماس‌های ویدیویی فعال بر روی ربات.
+
+<b>✧ /activevideo</b> - چک کردن تماس‌های ویدیویی فعال بر روی ربات.
+
+<b>✧ /stats</b> - چک کردن آمار ربات‌ها
+
+"""
