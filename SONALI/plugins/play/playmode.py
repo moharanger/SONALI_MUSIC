@@ -8,13 +8,11 @@ from SONALI.utils.inline.settings import playmode_users_markup
 from config import BANNED_USERS
 
 
-@app.on_message(
-    filters.command(
-        ["playmode", "mode"], prefixes=["/", "!", "%", ",", "", ".", "@", "#"," "]
-    )
-    & filters.group
-    & ~BANNED_USERS
-)
+### Commands
+PLAYMODE_COMMAND = get_command("PLAYMODE_COMMAND")
+
+
+@app.on_message(filters.command(PLAYMODE_COMMAND,prefixes=["", "/"]) & filters.group & ~BANNED_USERS)
 @language
 async def playmode_(client, message: Message, _):
     playmode = await get_playmode(message.chat.id)
@@ -34,6 +32,6 @@ async def playmode_(client, message: Message, _):
         Playtype = True
     buttons = playmode_users_markup(_, Direct, Group, Playtype)
     response = await message.reply_text(
-        _["play_22"].format(message.chat.title),
+        _["playmode_1"].format(message.chat.title),
         reply_markup=InlineKeyboardMarkup(buttons),
     )
