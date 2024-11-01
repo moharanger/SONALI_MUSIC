@@ -6,7 +6,7 @@ from pyrogram.enums import ChatType, ChatMembersFilter
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from youtubesearchpython.__future__ import VideosSearch
 import config
-from SONALI import app
+from SONALI import HELPABLE, app
 from SONALI.misc import _boot_
 from SONALI.plugins.sudo.sudoers import sudoers_list
 from SONALI.utils.database import (
